@@ -6,6 +6,7 @@
 package print;
 
 import java.awt.Color;
+import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -16,7 +17,7 @@ import javax.swing.SwingConstants;
  */
 public class Cpole {
     int zmlogic=0;
-    int zm=0;
+    int zm=7;
     JLabel j=new JLabel();
 //    String[] zm={"R","P","W"," "};
     int nextval=0;     
@@ -25,8 +26,14 @@ public class Cpole {
         j.setHorizontalAlignment(SwingConstants.CENTER);
         j.setVerticalAlignment(SwingConstants.CENTER);
         j.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mousePressed(java.awt.event.MouseEvent evt) {
-            zmiana();
+        public void mousePressed(MouseEvent evt) {
+            if(evt.getButton() == MouseEvent.BUTTON3)
+            {
+                j.setText(" ");
+                zmlogic=0;
+            }
+            else    
+                zmiana();
         }});
     }
     
@@ -41,7 +48,7 @@ public class Cpole {
             case 6: j.setText("Og");break;
             case 7: break;
         }
-//        zmlogic=1;
+        zmlogic=1;
 //        j.setText(zm[nextval]);
 //        nextval++;
 //        if(nextval>3){ nextval=0; zmlogic=0;}
