@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.List;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -19,6 +20,7 @@ import static java.awt.print.PageFormat.LANDSCAPE;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -47,6 +49,9 @@ public class Frame extends javax.swing.JFrame{
     int days;
     Cpole[][] tab=new Cpole[prac][days];
     Color myGray=new Color(240,240,240);
+    Color myBlue=new Color(128,206,212);
+    int[] sobniedz={-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+    int zm_sn=0;
     
     public Frame() {
         initComponents();
@@ -432,10 +437,12 @@ public class Frame extends javax.swing.JFrame{
         for(int i=0;i<days;i++){
         x1.set(year, month, i+1);
         labs[i]=new JLabel();
+        labs[i].setOpaque(true);
+        labs[i].setBackground(Color.white);
         labs[i].setBorder(BorderFactory.createLineBorder(Color.black));
         labs[i].setHorizontalAlignment(SwingConstants.CENTER);
         labs[i].setVerticalAlignment(SwingConstants.CENTER);
-        labs[i].setText("<html>"+Integer.toString(i+1)+"<br/>"+translate_day_add(x1.getTime())+"</html>");
+        labs[i].setText("<html>"+Integer.toString(i+1)+"<br/>"+translate_day_add(x1.getTime(),i)+"</html>");
         labs[i].setBounds(szer*i+110, 180, szer, szer+10);
         PanelToPrint.add(labs[i]);
         }
@@ -464,6 +471,9 @@ public class Frame extends javax.swing.JFrame{
             names[i].setOpaque(false);
             PanelToPrint.add(names[i]);
         }
+        
+
+        color_sobniedz(labs);
         
         zamien(Print);
     }//GEN-LAST:event_BzatwierdzActionPerformed
@@ -653,16 +663,16 @@ public class Frame extends javax.swing.JFrame{
         }   
     }
     
-    private String translate_day_add(Date x1){
+    private String translate_day_add(Date x1,int i){
         int a=x1.getDay();
         switch (a){
-            case 0: {return "Nied";}
+            case 0: {sobniedz[zm_sn]=i;zm_sn++;return "Nied";}
             case 1: {return "Pon";}
             case 2: {return "Wt";}
             case 3: {return "Śr";}
             case 4: {return "Czw";}
             case 5: {return "Pt";}
-            case 6: {return "Sob";}
+            case 6: {sobniedz[zm_sn]=i;zm_sn++;return "Sob";}
             default: return " ";
         }
     }
@@ -717,4 +727,15 @@ public class Frame extends javax.swing.JFrame{
             zmiany(a);
         }
     }
+    
+        private void color_sobniedz(JLabel[] labs){
+            int i=0;
+            while(sobniedz[i]!=-1){
+                labs[sobniedz[i]].setBackground(myBlue);
+                for(int j=0;j<prac;j++)
+                    tab[j][sobniedz[i]].j.setBackground(myBlue);
+                i++;
+            }
+    }
 }
+

@@ -25,6 +25,8 @@ public class Cpole {
         j.setBorder(BorderFactory.createLineBorder(Color.black));
         j.setHorizontalAlignment(SwingConstants.CENTER);
         j.setVerticalAlignment(SwingConstants.CENTER);
+        j.setOpaque(true);
+        j.setBackground(Color.white);
         j.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mousePressed(MouseEvent evt) {
             if(evt.getButton() == MouseEvent.BUTTON3)
@@ -42,7 +44,7 @@ public class Cpole {
             case 0: j.setText("R");break;
             case 1: j.setText("12");break;
             case 2: j.setText("P");break;
-            case 3: j.setText("W");break;
+            case 3: j.setText("<html><font color=\"red\">W</font></html>");break;
             case 4: j.setText("Uw");break;
             case 5: j.setText("L4");break;
             case 6: j.setText("Og");break;
