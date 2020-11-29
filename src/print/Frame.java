@@ -11,33 +11,25 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Insets;
-import java.awt.List;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.print.PageFormat;
-import static java.awt.print.PageFormat.LANDSCAPE;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Scanner;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
-import javax.print.attribute.standard.OrientationRequested;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -55,7 +47,8 @@ public class Frame extends javax.swing.JFrame{
     Color myBlue=new Color(128,206,212);
     int[] sobniedz={-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
     int zm_sn=0;
-    static final Scanner scanner = new Scanner(System.in).useDelimiter("\\s*");
+    private final JFileChooser openFile;
+    
     
     public Frame() {
         initComponents();
@@ -68,18 +61,21 @@ public class Frame extends javax.swing.JFrame{
         Image upimg =img1.getImage();
         Image modupimg=upimg.getScaledInstance(50, 20, java.awt.Image.SCALE_SMOOTH);
         img1=new ImageIcon(modupimg);
-        jLabel5.setIcon(img1);
-        jLabel7.setIcon(img1);
+        up_mies.setIcon(img1);
+        up_rok.setIcon(img1);
         
         ImageIcon img2 = new ImageIcon(getClass().getResource("/print/res/down.png"), "");
         Image downimg =img2.getImage();
         Image moddownimg=downimg.getScaledInstance(50, 20, java.awt.Image.SCALE_SMOOTH);
         img2=new ImageIcon(moddownimg);
-        jLabel6.setIcon(img2);
-        jLabel8.setIcon(img2);
+        down_mies.setIcon(img2);
+        down_rok.setIcon(img2);
         
-        jLabel3.setText(Integer.toString(Calendar.getInstance().get(Calendar.MONTH)+1));
-        jLabel4.setText(Integer.toString(Calendar.getInstance().get(Calendar.YEAR)));
+        Lmies_num.setText(Integer.toString(Calendar.getInstance().get(Calendar.MONTH)+1));
+        Lrok_num.setText(Integer.toString(Calendar.getInstance().get(Calendar.YEAR)));
+        
+        openFile = new JFileChooser();
+        openFile.setFileFilter(new FileNameExtensionFilter("TEXT FILES", "txt", "text"));
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -91,39 +87,39 @@ public class Frame extends javax.swing.JFrame{
         Lwolne = new javax.swing.JLabel();
         Bzatwierdz = new javax.swing.JButton();
         Tprac = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        Lmies = new javax.swing.JLabel();
+        Lrok = new javax.swing.JLabel();
+        Lmies_num = new javax.swing.JLabel();
+        Lrok_num = new javax.swing.JLabel();
+        up_mies = new javax.swing.JLabel();
+        down_mies = new javax.swing.JLabel();
+        up_rok = new javax.swing.JLabel();
+        down_rok = new javax.swing.JLabel();
         Lwolne1 = new javax.swing.JLabel();
-        Lpracownicy1 = new javax.swing.JLabel();
+        Lszablon = new javax.swing.JLabel();
         szablon_wyb = new javax.swing.JButton();
-        szablon_wyb1 = new javax.swing.JButton();
+        szablon_wyb_dodaj = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jTextField4 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jTextField5 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jTextField6 = new javax.swing.JTextField();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jTextField7 = new javax.swing.JTextField();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jTextField8 = new javax.swing.JTextField();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jTextField9 = new javax.swing.JTextField();
+        minus_min_wolne = new javax.swing.JButton();
+        min_wolne = new javax.swing.JTextField();
+        plus_min_wolne = new javax.swing.JButton();
+        plus_min_osob = new javax.swing.JButton();
+        minus_min_osob = new javax.swing.JButton();
+        min_osob = new javax.swing.JTextField();
+        plus_pref_wolne = new javax.swing.JButton();
+        minus_pref_wolne = new javax.swing.JButton();
+        pref_wolne = new javax.swing.JTextField();
+        plus_max_wolne = new javax.swing.JButton();
+        minus_max_wolne = new javax.swing.JButton();
+        max_wolne = new javax.swing.JTextField();
+        plus_pref_osob = new javax.swing.JButton();
+        minus_pref_osob = new javax.swing.JButton();
+        pref_osob = new javax.swing.JTextField();
+        plus_max_osob = new javax.swing.JButton();
+        minus_max_osob = new javax.swing.JButton();
+        max_osob = new javax.swing.JTextField();
         Print = new javax.swing.JPanel();
         drukuj = new javax.swing.JButton();
         zapisz = new javax.swing.JButton();
@@ -161,41 +157,41 @@ public class Frame extends javax.swing.JFrame{
 
         Tprac.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Miesiac");
+        Lmies.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Lmies.setText("Miesiac");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("Rok");
+        Lrok.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Lrok.setText("Rok");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("mies");
+        Lmies_num.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Lmies_num.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Lmies_num.setText("mies");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("rok");
+        Lrok_num.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Lrok_num.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Lrok_num.setText("rok");
 
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+        up_mies.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel5MousePressed(evt);
+                up_miesMousePressed(evt);
             }
         });
 
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+        down_mies.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel6MousePressed(evt);
+                down_miesMousePressed(evt);
             }
         });
 
-        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+        up_rok.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel7MousePressed(evt);
+                up_rokMousePressed(evt);
             }
         });
 
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+        down_rok.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel8MousePressed(evt);
+                down_rokMousePressed(evt);
             }
         });
 
@@ -203,9 +199,9 @@ public class Frame extends javax.swing.JFrame{
         Lwolne1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Lwolne1.setText("Liczba osób na zmianie");
 
-        Lpracownicy1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Lpracownicy1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Lpracownicy1.setText("Szablon:");
+        Lszablon.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Lszablon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Lszablon.setText("Szablon:");
 
         szablon_wyb.setText("Wybierz szablon...");
         szablon_wyb.addActionListener(new java.awt.event.ActionListener() {
@@ -214,11 +210,11 @@ public class Frame extends javax.swing.JFrame{
             }
         });
 
-        szablon_wyb1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        szablon_wyb1.setText("+");
-        szablon_wyb1.addActionListener(new java.awt.event.ActionListener() {
+        szablon_wyb_dodaj.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        szablon_wyb_dodaj.setText("+");
+        szablon_wyb_dodaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                szablon_wyb1ActionPerformed(evt);
+                szablon_wyb_dodajActionPerformed(evt);
             }
         });
 
@@ -231,161 +227,161 @@ public class Frame extends javax.swing.JFrame{
         jTextField3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextField3.setText("max");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton1.setText("-");
-        jButton1.setMaximumSize(new java.awt.Dimension(30, 30));
-        jButton1.setMinimumSize(new java.awt.Dimension(30, 30));
-        jButton1.setPreferredSize(new java.awt.Dimension(45, 45));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        minus_min_wolne.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        minus_min_wolne.setText("-");
+        minus_min_wolne.setMaximumSize(new java.awt.Dimension(30, 30));
+        minus_min_wolne.setMinimumSize(new java.awt.Dimension(30, 30));
+        minus_min_wolne.setPreferredSize(new java.awt.Dimension(45, 45));
+        minus_min_wolne.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                minus_min_wolneActionPerformed(evt);
             }
         });
 
-        jTextField4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField4.setText("0");
+        min_wolne.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        min_wolne.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        min_wolne.setText("0");
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton2.setText("+");
-        jButton2.setMaximumSize(new java.awt.Dimension(30, 30));
-        jButton2.setMinimumSize(new java.awt.Dimension(30, 30));
-        jButton2.setPreferredSize(new java.awt.Dimension(45, 45));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        plus_min_wolne.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        plus_min_wolne.setText("+");
+        plus_min_wolne.setMaximumSize(new java.awt.Dimension(30, 30));
+        plus_min_wolne.setMinimumSize(new java.awt.Dimension(30, 30));
+        plus_min_wolne.setPreferredSize(new java.awt.Dimension(45, 45));
+        plus_min_wolne.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                plus_min_wolneActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton3.setText("+");
-        jButton3.setMaximumSize(new java.awt.Dimension(30, 30));
-        jButton3.setMinimumSize(new java.awt.Dimension(30, 30));
-        jButton3.setPreferredSize(new java.awt.Dimension(45, 45));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        plus_min_osob.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        plus_min_osob.setText("+");
+        plus_min_osob.setMaximumSize(new java.awt.Dimension(30, 30));
+        plus_min_osob.setMinimumSize(new java.awt.Dimension(30, 30));
+        plus_min_osob.setPreferredSize(new java.awt.Dimension(45, 45));
+        plus_min_osob.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                plus_min_osobActionPerformed(evt);
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton4.setText("-");
-        jButton4.setMaximumSize(new java.awt.Dimension(30, 30));
-        jButton4.setMinimumSize(new java.awt.Dimension(30, 30));
-        jButton4.setPreferredSize(new java.awt.Dimension(45, 45));
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        minus_min_osob.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        minus_min_osob.setText("-");
+        minus_min_osob.setMaximumSize(new java.awt.Dimension(30, 30));
+        minus_min_osob.setMinimumSize(new java.awt.Dimension(30, 30));
+        minus_min_osob.setPreferredSize(new java.awt.Dimension(45, 45));
+        minus_min_osob.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                minus_min_osobActionPerformed(evt);
             }
         });
 
-        jTextField5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField5.setText("0");
+        min_osob.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        min_osob.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        min_osob.setText("0");
 
-        jButton5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton5.setText("+");
-        jButton5.setMaximumSize(new java.awt.Dimension(30, 30));
-        jButton5.setMinimumSize(new java.awt.Dimension(30, 30));
-        jButton5.setPreferredSize(new java.awt.Dimension(45, 45));
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        plus_pref_wolne.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        plus_pref_wolne.setText("+");
+        plus_pref_wolne.setMaximumSize(new java.awt.Dimension(30, 30));
+        plus_pref_wolne.setMinimumSize(new java.awt.Dimension(30, 30));
+        plus_pref_wolne.setPreferredSize(new java.awt.Dimension(45, 45));
+        plus_pref_wolne.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                plus_pref_wolneActionPerformed(evt);
             }
         });
 
-        jButton6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton6.setText("-");
-        jButton6.setMaximumSize(new java.awt.Dimension(30, 30));
-        jButton6.setMinimumSize(new java.awt.Dimension(30, 30));
-        jButton6.setPreferredSize(new java.awt.Dimension(45, 45));
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        minus_pref_wolne.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        minus_pref_wolne.setText("-");
+        minus_pref_wolne.setMaximumSize(new java.awt.Dimension(30, 30));
+        minus_pref_wolne.setMinimumSize(new java.awt.Dimension(30, 30));
+        minus_pref_wolne.setPreferredSize(new java.awt.Dimension(45, 45));
+        minus_pref_wolne.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                minus_pref_wolneActionPerformed(evt);
             }
         });
 
-        jTextField6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField6.setText("0");
+        pref_wolne.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        pref_wolne.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        pref_wolne.setText("0");
 
-        jButton7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton7.setText("+");
-        jButton7.setMaximumSize(new java.awt.Dimension(30, 30));
-        jButton7.setMinimumSize(new java.awt.Dimension(30, 30));
-        jButton7.setPreferredSize(new java.awt.Dimension(45, 45));
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        plus_max_wolne.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        plus_max_wolne.setText("+");
+        plus_max_wolne.setMaximumSize(new java.awt.Dimension(30, 30));
+        plus_max_wolne.setMinimumSize(new java.awt.Dimension(30, 30));
+        plus_max_wolne.setPreferredSize(new java.awt.Dimension(45, 45));
+        plus_max_wolne.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                plus_max_wolneActionPerformed(evt);
             }
         });
 
-        jButton8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton8.setText("-");
-        jButton8.setMaximumSize(new java.awt.Dimension(30, 30));
-        jButton8.setMinimumSize(new java.awt.Dimension(30, 30));
-        jButton8.setPreferredSize(new java.awt.Dimension(45, 45));
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        minus_max_wolne.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        minus_max_wolne.setText("-");
+        minus_max_wolne.setMaximumSize(new java.awt.Dimension(30, 30));
+        minus_max_wolne.setMinimumSize(new java.awt.Dimension(30, 30));
+        minus_max_wolne.setPreferredSize(new java.awt.Dimension(45, 45));
+        minus_max_wolne.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                minus_max_wolneActionPerformed(evt);
             }
         });
 
-        jTextField7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField7.setText("0");
+        max_wolne.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        max_wolne.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        max_wolne.setText("0");
 
-        jButton9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton9.setText("+");
-        jButton9.setMaximumSize(new java.awt.Dimension(30, 30));
-        jButton9.setMinimumSize(new java.awt.Dimension(30, 30));
-        jButton9.setPreferredSize(new java.awt.Dimension(45, 45));
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        plus_pref_osob.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        plus_pref_osob.setText("+");
+        plus_pref_osob.setMaximumSize(new java.awt.Dimension(30, 30));
+        plus_pref_osob.setMinimumSize(new java.awt.Dimension(30, 30));
+        plus_pref_osob.setPreferredSize(new java.awt.Dimension(45, 45));
+        plus_pref_osob.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                plus_pref_osobActionPerformed(evt);
             }
         });
 
-        jButton10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton10.setText("-");
-        jButton10.setMaximumSize(new java.awt.Dimension(30, 30));
-        jButton10.setMinimumSize(new java.awt.Dimension(30, 30));
-        jButton10.setPreferredSize(new java.awt.Dimension(45, 45));
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        minus_pref_osob.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        minus_pref_osob.setText("-");
+        minus_pref_osob.setMaximumSize(new java.awt.Dimension(30, 30));
+        minus_pref_osob.setMinimumSize(new java.awt.Dimension(30, 30));
+        minus_pref_osob.setPreferredSize(new java.awt.Dimension(45, 45));
+        minus_pref_osob.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                minus_pref_osobActionPerformed(evt);
             }
         });
 
-        jTextField8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField8.setText("0");
+        pref_osob.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        pref_osob.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        pref_osob.setText("0");
 
-        jButton11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton11.setText("+");
-        jButton11.setMaximumSize(new java.awt.Dimension(30, 30));
-        jButton11.setMinimumSize(new java.awt.Dimension(30, 30));
-        jButton11.setPreferredSize(new java.awt.Dimension(45, 45));
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
+        plus_max_osob.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        plus_max_osob.setText("+");
+        plus_max_osob.setMaximumSize(new java.awt.Dimension(30, 30));
+        plus_max_osob.setMinimumSize(new java.awt.Dimension(30, 30));
+        plus_max_osob.setPreferredSize(new java.awt.Dimension(45, 45));
+        plus_max_osob.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
+                plus_max_osobActionPerformed(evt);
             }
         });
 
-        jButton12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton12.setText("-");
-        jButton12.setMaximumSize(new java.awt.Dimension(30, 30));
-        jButton12.setMinimumSize(new java.awt.Dimension(30, 30));
-        jButton12.setPreferredSize(new java.awt.Dimension(45, 45));
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        minus_max_osob.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        minus_max_osob.setText("-");
+        minus_max_osob.setMaximumSize(new java.awt.Dimension(30, 30));
+        minus_max_osob.setMinimumSize(new java.awt.Dimension(30, 30));
+        minus_max_osob.setPreferredSize(new java.awt.Dimension(45, 45));
+        minus_max_osob.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                minus_max_osobActionPerformed(evt);
             }
         });
 
-        jTextField9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTextField9.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField9.setText("0");
+        max_osob.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        max_osob.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        max_osob.setText("0");
 
         javax.swing.GroupLayout StartingPanelLayout = new javax.swing.GroupLayout(StartingPanel);
         StartingPanel.setLayout(StartingPanelLayout);
@@ -399,11 +395,11 @@ public class Frame extends javax.swing.JFrame{
                 .addGap(170, 170, 170)
                 .addGroup(StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(StartingPanelLayout.createSequentialGroup()
-                        .addComponent(Lpracownicy1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Lszablon, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(szablon_wyb, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(szablon_wyb1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(szablon_wyb_dodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Lpracownicy, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -413,16 +409,16 @@ public class Frame extends javax.swing.JFrame{
                         .addGroup(StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(StartingPanelLayout.createSequentialGroup()
                                 .addGroup(StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(Lmies)
+                                    .addComponent(up_mies, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(down_mies, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Lmies_num, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(117, 117, 117)
                                 .addGroup(StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(Lrok)
+                                    .addComponent(up_rok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(down_rok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Lrok_num, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(StartingPanelLayout.createSequentialGroup()
                                 .addGroup(StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(Lwolne, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -432,43 +428,43 @@ public class Frame extends javax.swing.JFrame{
                                     .addGroup(StartingPanelLayout.createSequentialGroup()
                                         .addGroup(StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addGroup(StartingPanelLayout.createSequentialGroup()
-                                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(minus_min_osob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(min_osob, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(plus_min_osob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(minus_pref_osob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(pref_osob, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(plus_pref_osob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(StartingPanelLayout.createSequentialGroup()
-                                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(minus_min_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(min_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(plus_min_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(69, 69, 69)
-                                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(minus_pref_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(pref_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(plus_pref_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGap(66, 66, 66)
                                         .addGroup(StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addGroup(StartingPanelLayout.createSequentialGroup()
-                                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(minus_max_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(max_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(plus_max_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(StartingPanelLayout.createSequentialGroup()
-                                                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(minus_max_osob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(max_osob, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                .addComponent(plus_max_osob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addGroup(StartingPanelLayout.createSequentialGroup()
                                         .addGap(52, 52, 52)
                                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -483,9 +479,9 @@ public class Frame extends javax.swing.JFrame{
             .addGroup(StartingPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Lpracownicy1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Lszablon, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(szablon_wyb, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(szablon_wyb1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(szablon_wyb_dodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Lpracownicy, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Tprac, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
@@ -496,43 +492,43 @@ public class Frame extends javax.swing.JFrame{
                 .addGap(18, 18, 18)
                 .addGroup(StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lwolne, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(minus_min_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(min_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(plus_min_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(minus_pref_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pref_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(plus_pref_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(minus_max_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(max_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(plus_max_wolne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lwolne1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(minus_min_osob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(min_osob, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(plus_min_osob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(minus_pref_osob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pref_osob, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(plus_pref_osob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(minus_max_osob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(max_osob, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(plus_max_osob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(94, 94, 94)
                 .addGroup(StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(Lmies)
+                    .addComponent(Lrok))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(up_rok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(up_mies, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(Lmies_num)
+                    .addComponent(Lrok_num))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(down_mies, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(down_rok, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addComponent(Bzatwierdz, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
@@ -548,8 +544,6 @@ public class Frame extends javax.swing.JFrame{
         });
 
         zapisz.setText("Zapisz");
-        zapisz.setMaximumSize(new java.awt.Dimension(63, 23));
-        zapisz.setMinimumSize(new java.awt.Dimension(63, 23));
         zapisz.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 zapiszActionPerformed(evt);
@@ -734,8 +728,8 @@ public class Frame extends javax.swing.JFrame{
     
     private void BzatwierdzActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BzatwierdzActionPerformed
         prac=Integer.parseInt(Tprac.getText());
-        int month=Integer.parseInt(jLabel3.getText())-1;
-        int year=Integer.parseInt(jLabel4.getText());
+        int month=Integer.parseInt(Lmies_num.getText())-1;
+        int year=Integer.parseInt(Lrok_num.getText());
         
         Calendar x1=new GregorianCalendar();
         Calendar x2=new GregorianCalendar();
@@ -801,41 +795,41 @@ public class Frame extends javax.swing.JFrame{
        printPanel(PanelToPrint);
     }//GEN-LAST:event_drukujActionPerformed
 
-    private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
-        int x=Integer.parseInt(jLabel3.getText());
+    private void up_miesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_up_miesMousePressed
+        int x=Integer.parseInt(Lmies_num.getText());
         x+=1;
         if(x>12){
-            int y=Integer.parseInt(jLabel4.getText());
+            int y=Integer.parseInt(Lrok_num.getText());
             y++;
-            jLabel4.setText(Integer.toString(y));
+            Lrok_num.setText(Integer.toString(y));
             x=1;
         }
-        jLabel3.setText(Integer.toString(x));
-    }//GEN-LAST:event_jLabel5MousePressed
+        Lmies_num.setText(Integer.toString(x));
+    }//GEN-LAST:event_up_miesMousePressed
 
-    private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
-        int x=Integer.parseInt(jLabel3.getText());
+    private void down_miesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_down_miesMousePressed
+        int x=Integer.parseInt(Lmies_num.getText());
         x-=1;
         if(x<1){
-            int y=Integer.parseInt(jLabel4.getText());
+            int y=Integer.parseInt(Lrok_num.getText());
             y--;
-            jLabel4.setText(Integer.toString(y));
+            Lrok_num.setText(Integer.toString(y));
             x=12;
         }
-        jLabel3.setText(Integer.toString(x));
-    }//GEN-LAST:event_jLabel6MousePressed
+        Lmies_num.setText(Integer.toString(x));
+    }//GEN-LAST:event_down_miesMousePressed
 
-    private void jLabel7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MousePressed
-        int x=Integer.parseInt(jLabel4.getText());
+    private void up_rokMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_up_rokMousePressed
+        int x=Integer.parseInt(Lrok_num.getText());
         x+=1;
-        jLabel4.setText(Integer.toString(x));
-    }//GEN-LAST:event_jLabel7MousePressed
+        Lrok_num.setText(Integer.toString(x));
+    }//GEN-LAST:event_up_rokMousePressed
 
-    private void jLabel8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MousePressed
-        int x=Integer.parseInt(jLabel4.getText());
+    private void down_rokMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_down_rokMousePressed
+        int x=Integer.parseInt(Lrok_num.getText());
         x-=1;
-        jLabel4.setText(Integer.toString(x));
-    }//GEN-LAST:event_jLabel8MousePressed
+        Lrok_num.setText(Integer.toString(x));
+    }//GEN-LAST:event_down_rokMousePressed
 
     private void RMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RMousePressed
         change(0);
@@ -869,60 +863,67 @@ public class Frame extends javax.swing.JFrame{
         // TODO add your handling code here:
     }//GEN-LAST:event_zapiszActionPerformed
 
-    private void szablon_wyb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_szablon_wyb1ActionPerformed
+    private void szablon_wyb_dodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_szablon_wyb_dodajActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_szablon_wyb1ActionPerformed
+    }//GEN-LAST:event_szablon_wyb_dodajActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void minus_min_wolneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus_min_wolneActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_minus_min_wolneActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void plus_min_wolneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus_min_wolneActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_plus_min_wolneActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void plus_min_osobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus_min_osobActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_plus_min_osobActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void minus_min_osobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus_min_osobActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_minus_min_osobActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void plus_pref_wolneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus_pref_wolneActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_plus_pref_wolneActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void minus_pref_wolneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus_pref_wolneActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_minus_pref_wolneActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void plus_max_wolneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus_max_wolneActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_plus_max_wolneActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void minus_max_wolneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus_max_wolneActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_minus_max_wolneActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void plus_pref_osobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus_pref_osobActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+    }//GEN-LAST:event_plus_pref_osobActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void minus_pref_osobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus_pref_osobActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_minus_pref_osobActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+    private void plus_max_osobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus_max_osobActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
+    }//GEN-LAST:event_plus_max_osobActionPerformed
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+    private void minus_max_osobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus_max_osobActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton12ActionPerformed
+    }//GEN-LAST:event_minus_max_osobActionPerformed
 
     private void szablon_wybActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_szablon_wybActionPerformed
-        // TODO add your handling code here:
+        int returnedValue = openFile.showOpenDialog(this);
+        
+        if(returnedValue == JFileChooser.APPROVE_OPTION){
+                String filename=openFile.getSelectedFile().getName();
+                szablon_wyb.setText(filename);
+        }
+        else
+            szablon_wyb.setText("Wybierz szablon...");
     }//GEN-LAST:event_szablon_wybActionPerformed
 
     private void printPanel(JPanel jpanel){
@@ -996,8 +997,12 @@ public class Frame extends javax.swing.JFrame{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Bzatwierdz;
     private javax.swing.JLabel Lfour;
+    private javax.swing.JLabel Lmies;
+    private javax.swing.JLabel Lmies_num;
     private javax.swing.JLabel Lpracownicy;
-    private javax.swing.JLabel Lpracownicy1;
+    private javax.swing.JLabel Lrok;
+    private javax.swing.JLabel Lrok_num;
+    private javax.swing.JLabel Lszablon;
     private javax.swing.JLabel Lwolne;
     private javax.swing.JLabel Lwolne1;
     private javax.swing.JLabel Og;
@@ -1011,41 +1016,37 @@ public class Frame extends javax.swing.JFrame{
     private javax.swing.JLabel W;
     private javax.swing.JPanel background;
     private javax.swing.JButton cofnij;
+    private javax.swing.JLabel down_mies;
+    private javax.swing.JLabel down_rok;
     private javax.swing.JButton drukuj;
     private javax.swing.JButton generuj;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField max_osob;
+    private javax.swing.JTextField max_wolne;
+    private javax.swing.JTextField min_osob;
+    private javax.swing.JTextField min_wolne;
+    private javax.swing.JButton minus_max_osob;
+    private javax.swing.JButton minus_max_wolne;
+    private javax.swing.JButton minus_min_osob;
+    private javax.swing.JButton minus_min_wolne;
+    private javax.swing.JButton minus_pref_osob;
+    private javax.swing.JButton minus_pref_wolne;
+    private javax.swing.JButton plus_max_osob;
+    private javax.swing.JButton plus_max_wolne;
+    private javax.swing.JButton plus_min_osob;
+    private javax.swing.JButton plus_min_wolne;
+    private javax.swing.JButton plus_pref_osob;
+    private javax.swing.JButton plus_pref_wolne;
+    private javax.swing.JTextField pref_osob;
+    private javax.swing.JTextField pref_wolne;
     private javax.swing.JButton szablon_wyb;
-    private javax.swing.JButton szablon_wyb1;
+    private javax.swing.JButton szablon_wyb_dodaj;
     private javax.swing.JLabel twelve;
+    private javax.swing.JLabel up_mies;
+    private javax.swing.JLabel up_rok;
     private javax.swing.JButton zapisz;
     // End of variables declaration//GEN-END:variables
 
