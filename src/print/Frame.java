@@ -18,9 +18,14 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
+import static java.lang.Integer.parseInt;
+import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -55,6 +60,8 @@ public class Frame extends javax.swing.JFrame{
     boolean first=true;
     String mies_tmp;
     Calendar x_tmp;
+    int[] template_values= new int[7];
+    String[] employee_name;
     
     
     public Frame() {
@@ -83,6 +90,8 @@ public class Frame extends javax.swing.JFrame{
         
         openFile = new JFileChooser();
         openFile.setFileFilter(new FileNameExtensionFilter("TEXT FILES", "txt", "text"));
+        
+        template_values[0]=0;
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -139,6 +148,7 @@ public class Frame extends javax.swing.JFrame{
         Uw = new javax.swing.JLabel();
         Lfour = new javax.swing.JLabel();
         Og = new javax.swing.JLabel();
+        add_template = new javax.swing.JButton();
         PanelToPrint = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
 
@@ -155,6 +165,7 @@ public class Frame extends javax.swing.JFrame{
         Lwolne.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Lwolne.setText("Ilosc dni wolnych");
 
+        Bzatwierdz.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Bzatwierdz.setText("Zatwierdz");
         Bzatwierdz.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,8 +229,8 @@ public class Frame extends javax.swing.JFrame{
             }
         });
 
-        szablon_wyb_dodaj.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        szablon_wyb_dodaj.setText("+");
+        szablon_wyb_dodaj.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        szablon_wyb_dodaj.setText("Dodaj szablon");
         szablon_wyb_dodaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 szablon_wyb_dodajActionPerformed(evt);
@@ -396,7 +407,9 @@ public class Frame extends javax.swing.JFrame{
         StartingPanelLayout.setHorizontalGroup(
             StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, StartingPanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(szablon_wyb_dodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
                 .addComponent(Bzatwierdz, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
             .addGroup(StartingPanelLayout.createSequentialGroup()
@@ -406,8 +419,6 @@ public class Frame extends javax.swing.JFrame{
                         .addComponent(Lszablon, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(szablon_wyb, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(szablon_wyb_dodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Lpracownicy, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -491,10 +502,9 @@ public class Frame extends javax.swing.JFrame{
                 .addGroup(StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lszablon, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(szablon_wyb, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(szablon_wyb_dodaj, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Lpracownicy, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Tprac, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addGroup(StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
@@ -540,7 +550,9 @@ public class Frame extends javax.swing.JFrame{
                     .addComponent(down_mies, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(down_rok, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
-                .addComponent(Bzatwierdz, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(StartingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(szablon_wyb_dodaj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Bzatwierdz, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
                 .addGap(24, 24, 24))
         );
 
@@ -572,6 +584,11 @@ public class Frame extends javax.swing.JFrame{
         generuj.setText("Generuj");
         generuj.setMaximumSize(new java.awt.Dimension(63, 23));
         generuj.setMinimumSize(new java.awt.Dimension(63, 23));
+        generuj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generujActionPerformed(evt);
+            }
+        });
 
         R.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         R.setText("R");
@@ -636,6 +653,15 @@ public class Frame extends javax.swing.JFrame{
             }
         });
 
+        add_template.setText("Dodaj szablon");
+        add_template.setMaximumSize(new java.awt.Dimension(63, 23));
+        add_template.setMinimumSize(new java.awt.Dimension(63, 23));
+        add_template.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                add_templateActionPerformed(evt);
+            }
+        });
+
         PanelToPrint.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -645,7 +671,7 @@ public class Frame extends javax.swing.JFrame{
         PanelToPrint.setLayout(PanelToPrintLayout);
         PanelToPrintLayout.setHorizontalGroup(
             PanelToPrintLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 1293, Short.MAX_VALUE)
         );
         PanelToPrintLayout.setVerticalGroup(
             PanelToPrintLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -676,15 +702,17 @@ public class Frame extends javax.swing.JFrame{
                         .addComponent(Lfour, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(Og, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(84, 84, 84)
-                .addComponent(cofnij, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(141, 141, 141)
+                .addComponent(cofnij, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(generuj, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(add_template, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(zapisz, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(generuj, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(drukuj, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addComponent(zapisz, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(drukuj, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(PanelToPrint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         PrintLayout.setVerticalGroup(
@@ -710,7 +738,8 @@ public class Frame extends javax.swing.JFrame{
                             .addComponent(drukuj, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
                             .addComponent(zapisz, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
                             .addComponent(cofnij, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(generuj, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE))
+                            .addComponent(generuj, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                            .addComponent(add_template, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE))
                         .addGap(36, 36, 36))))
         );
 
@@ -813,6 +842,13 @@ public class Frame extends javax.swing.JFrame{
                 names[i].setMargin(new Insets(100,0,0,0));
                 names[i].setOpaque(false);
                 PanelToPrint.add(names[i]);
+            }
+            
+            //szblony
+            if(template_values[0]!=0){
+                for(int i=0;i<prac;i++){
+                    names[i].setText(employee_name[i]);
+                }
             }
         
             PanelToPrint.add(jLabel9);
@@ -952,19 +988,51 @@ public class Frame extends javax.swing.JFrame{
 
     private void szablon_wybActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_szablon_wybActionPerformed
         int returnedValue = openFile.showOpenDialog(this);
-        
+        String path="a";
         if(returnedValue == JFileChooser.APPROVE_OPTION){
                 String filename=openFile.getSelectedFile().getName();
+                path=openFile.getSelectedFile().getPath();
                 szablon_wyb.setText(filename);
         }
         else
             szablon_wyb.setText("Wybierz szablon...");
+        
+        try {
+            Scanner ina=new Scanner(Paths.get(path));
+            int a=0;
+            for(int i=0;i<=6;i++){
+                template_values[i]=Integer.parseInt(ina.nextLine());
+            }
+                employee_name=new String[template_values[0]];
+            for(int j=0;j<template_values[0];j++){
+                employee_name[j]=ina.nextLine();
+            }
+            Tprac.setText(String.valueOf(template_values[0]));
+            min_wolne.setText(String.valueOf(template_values[1]));
+            pref_wolne.setText(String.valueOf(template_values[2]));
+            max_wolne.setText(String.valueOf(template_values[3]));
+            min_osob.setText(String.valueOf(template_values[4]));
+            pref_osob.setText(String.valueOf(template_values[5]));
+            max_osob.setText(String.valueOf(template_values[6]));
+        } catch (IOException ex) {
+            Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }//GEN-LAST:event_szablon_wybActionPerformed
 
     private void cofnijActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cofnijActionPerformed
         mies_tmp=jLabel9.getText();
         zamien(StartingPanel);
     }//GEN-LAST:event_cofnijActionPerformed
+
+    private void generujActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generujActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_generujActionPerformed
+
+    private void add_templateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_templateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_add_templateActionPerformed
 
     private void printPanel(JPanel jpanel){
         PrinterJob printerjob=PrinterJob.getPrinterJob();
@@ -1054,6 +1122,7 @@ public class Frame extends javax.swing.JFrame{
     private javax.swing.JTextField Tprac;
     private javax.swing.JLabel Uw;
     private javax.swing.JLabel W;
+    private javax.swing.JButton add_template;
     private javax.swing.JPanel background;
     private javax.swing.JButton cofnij;
     private javax.swing.JLabel down_mies;
