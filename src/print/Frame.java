@@ -935,7 +935,7 @@ public class Frame extends javax.swing.JFrame{
     }//GEN-LAST:event_zapiszActionPerformed
 
     private void szablon_wyb_dodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_szablon_wyb_dodajActionPerformed
-        // TODO add your handling code here:
+       CTemplateFile fc=new CTemplateFile(this);
     }//GEN-LAST:event_szablon_wyb_dodajActionPerformed
 
     private void minus_min_wolneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus_min_wolneActionPerformed
@@ -1031,7 +1031,7 @@ public class Frame extends javax.swing.JFrame{
     }//GEN-LAST:event_generujActionPerformed
 
     private void add_templateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_templateActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_add_templateActionPerformed
 
     private void printPanel(JPanel jpanel){
