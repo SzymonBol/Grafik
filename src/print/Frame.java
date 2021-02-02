@@ -28,6 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -62,6 +63,7 @@ public class Frame extends javax.swing.JFrame{
     Calendar x_tmp;
     int[] template_values= new int[7];
     String[] employee_name;
+    CTemplateFile tmpfile;
     
     
     public Frame() {
@@ -845,11 +847,13 @@ public class Frame extends javax.swing.JFrame{
             }
             
             //szblony
-            if(template_values[0]!=0){
-                for(int i=0;i<prac;i++){
-                    names[i].setText(employee_name[i]);
-                }
+            int a=Integer.parseInt(Tprac.getText());
+            if(a>tmpfile.options[0])
+                a=tmpfile.options[0];
+            for(int i=0;i<a;i++){
+                names[i].setText(tmpfile.names[i]);
             }
+            
         
             PanelToPrint.add(jLabel9);
 
@@ -935,7 +939,11 @@ public class Frame extends javax.swing.JFrame{
     }//GEN-LAST:event_zapiszActionPerformed
 
     private void szablon_wyb_dodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_szablon_wyb_dodajActionPerformed
-       CTemplateFile fc=new CTemplateFile(this);
+       if(Integer.parseInt(Tprac.getText())>0){
+           JDialog dialog = new CNamesDialog(this,Integer.parseInt(Tprac.getText()));
+           dialog.setVisible(true);
+       }
+        
     }//GEN-LAST:event_szablon_wyb_dodajActionPerformed
 
     private void minus_min_wolneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus_min_wolneActionPerformed
@@ -987,35 +995,15 @@ public class Frame extends javax.swing.JFrame{
     }//GEN-LAST:event_minus_max_osobActionPerformed
 
     private void szablon_wybActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_szablon_wybActionPerformed
-        int returnedValue = openFile.showOpenDialog(this);
-        String path="a";
-        if(returnedValue == JFileChooser.APPROVE_OPTION){
-                String filename=openFile.getSelectedFile().getName();
-                path=openFile.getSelectedFile().getPath();
-                szablon_wyb.setText(filename);
-        }
-        else
-            szablon_wyb.setText("Wybierz szablon...");
-        
-        try {
-            Scanner ina=new Scanner(Paths.get(path));
-            int a=0;
-            for(int i=0;i<=6;i++){
-                template_values[i]=Integer.parseInt(ina.nextLine());
-            }
-                employee_name=new String[template_values[0]];
-            for(int j=0;j<template_values[0];j++){
-                employee_name[j]=ina.nextLine();
-            }
-            Tprac.setText(String.valueOf(template_values[0]));
-            min_wolne.setText(String.valueOf(template_values[1]));
-            pref_wolne.setText(String.valueOf(template_values[2]));
-            max_wolne.setText(String.valueOf(template_values[3]));
-            min_osob.setText(String.valueOf(template_values[4]));
-            pref_osob.setText(String.valueOf(template_values[5]));
-            max_osob.setText(String.valueOf(template_values[6]));
-        } catch (IOException ex) {
-            Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+        tmpfile= new CTemplateFile(this);
+        if(tmpfile.ok){
+            Tprac.setText(String.valueOf(tmpfile.options[0]));
+            min_wolne.setText(String.valueOf(tmpfile.options[1]));
+            pref_wolne.setText(String.valueOf(tmpfile.options[2]));
+            max_wolne.setText(String.valueOf(tmpfile.options[3]));
+            min_osob.setText(String.valueOf(tmpfile.options[4]));
+            pref_osob.setText(String.valueOf(tmpfile.options[5]));
+            max_osob.setText(String.valueOf(tmpfile.options[6]));
         }
         
         
