@@ -3,6 +3,13 @@ package print;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -14,12 +21,17 @@ import javax.swing.JTextPane;
 
 public class CNamesDialog extends JDialog{
     
-    public CNamesDialog(JFrame owner, int prac){
+    public CNamesDialog(JFrame owner, int prac, CTemplateFile file){
         super(owner, "Wprowadź imiona", true);
         JTextPane[] names=new JTextPane[prac];
         JLabel[] labs=new JLabel[prac];
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(prac+1,2));
+        panel.setLayout(new GridLayout(prac+2,2));
+        panel.add(new JLabel("Nazwa pliku:"));
+        JTextPane filename=new JTextPane();
+        panel.add(filename);
+        boolean end=false;
+        
         for(int i=0; i<prac;i++){
             names[i]=new JTextPane();
             labs[i]=new JLabel("<html><div style='text-align: center;'>" + "Imie "+(i+1)+" :" + "</div></html>");
@@ -31,11 +43,43 @@ public class CNamesDialog extends JDialog{
         }
         
         JButton ok = new JButton("OK");
-        
-        ok.addActionListener(event -> setVisible(false));
+        CTemplateFile ae=file;
+        ok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okActionPerformed(evt);
+                
+            }
+
+            private void okActionPerformed(ActionEvent evt) {
+                for(int i=0;i<prac;i++){
+                   ae.filename=filename.getText();
+                   ae.names[i]=names[i].getText();
+                }
+                crateString();
+                ae.ok=true;
+                setVisible(false);
+                
+            }
+
+            private void crateString() {
+                try {
+                    FileWriter writer = new FileWriter(filename.getText()+".txt");
+                    for(int i=0;i<7;i++){
+                        writer.write(Integer.toString(ae.options[i])+"\n");
+                    }
+                    for(int j=0;j<ae.options[0];j++){
+                         writer.write(names[j].getText()+"\n");
+                    }
+                    writer.close();
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(CNamesDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
         panel.add(ok);
         add(panel, BorderLayout.CENTER);
-        setSize(300,prac*50);
+        setSize(300,prac*70+70);
         setLocationRelativeTo(null);
     }
 }

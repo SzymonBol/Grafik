@@ -15,11 +15,26 @@ public class CTemplateFile {
     String path;
     boolean ok=false;
     int[] options=new int[7];
-    String[] names;
+    public String[] names;
     String filename;
     private JFileChooser openFile;
     
-    protected CTemplateFile(Component x){
+       protected CTemplateFile(){
+    
+    }
+       
+           protected CTemplateFile(int prac, int x1, int x2, int x3, int x4, int x5, int x6){
+        options[0]=prac;
+        options[1]=x1;
+        options[2]=x2;
+        options[3]=x3;
+        options[4]=x4;
+        options[5]=x5;
+        options[6]=x6;
+        names=new String[prac];
+    }
+    
+    protected void filechooser(Component x){
         openFile = new JFileChooser();
         openFile.setFileFilter(new FileNameExtensionFilter("TEXT FILES", "txt", "text"));
         openFile.setCurrentDirectory(new File("."));
@@ -31,6 +46,8 @@ public class CTemplateFile {
                 ok=true;
         }    
     }
+    
+
     
     private String gte_filename(){
         return filename;
@@ -51,6 +68,11 @@ public class CTemplateFile {
         } catch (IOException ex) {
             Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    void set_name(String name,int index){
+        names[index]=new String();
+        names[index]=name;
     }
     
 }

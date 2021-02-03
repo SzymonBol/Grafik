@@ -63,7 +63,8 @@ public class Frame extends javax.swing.JFrame{
     Calendar x_tmp;
     int[] template_values= new int[7];
     String[] employee_name;
-    CTemplateFile tmpfile;
+    CTemplateFile tmpfile=new CTemplateFile();
+    CTemplateFile dialog_file;
     
     
     public Frame() {
@@ -847,19 +848,20 @@ public class Frame extends javax.swing.JFrame{
             }
             
             //szblony
-            int a=Integer.parseInt(Tprac.getText());
+            if(tmpfile.ok){
+                int a=Integer.parseInt(Tprac.getText());
             if(a>tmpfile.options[0])
                 a=tmpfile.options[0];
             for(int i=0;i<a;i++){
                 names[i].setText(tmpfile.names[i]);
             }
+            }
+            
             
         
             PanelToPrint.add(jLabel9);
 
             color_sobniedz(labs);
-            
-            start_temp();
             
             zamien(Print);
         }
@@ -940,8 +942,15 @@ public class Frame extends javax.swing.JFrame{
 
     private void szablon_wyb_dodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_szablon_wyb_dodajActionPerformed
        if(Integer.parseInt(Tprac.getText())>0){
-           JDialog dialog = new CNamesDialog(this,Integer.parseInt(Tprac.getText()));
+           dialog_file= new CTemplateFile(Integer.parseInt(Tprac.getText()),Integer.parseInt(min_wolne.getText()),
+                   Integer.parseInt(pref_wolne.getText()),Integer.parseInt(max_wolne.getText()), Integer.parseInt(min_osob.getText()),
+                   Integer.parseInt(pref_osob.getText()),Integer.parseInt(max_osob.getText()));
+           JDialog dialog = new CNamesDialog(this,Integer.parseInt(Tprac.getText()),dialog_file);
            dialog.setVisible(true);
+           if(dialog_file.ok){
+               tmpfile=dialog_file;
+               szablon_wyb.setText(tmpfile.filename);
+           }
        }
         
     }//GEN-LAST:event_szablon_wyb_dodajActionPerformed
@@ -995,7 +1004,7 @@ public class Frame extends javax.swing.JFrame{
     }//GEN-LAST:event_minus_max_osobActionPerformed
 
     private void szablon_wybActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_szablon_wybActionPerformed
-        tmpfile= new CTemplateFile(this);
+        tmpfile.filechooser(this);
         if(tmpfile.ok){
             Tprac.setText(String.valueOf(tmpfile.options[0]));
             min_wolne.setText(String.valueOf(tmpfile.options[1]));
@@ -1004,9 +1013,8 @@ public class Frame extends javax.swing.JFrame{
             min_osob.setText(String.valueOf(tmpfile.options[4]));
             pref_osob.setText(String.valueOf(tmpfile.options[5]));
             max_osob.setText(String.valueOf(tmpfile.options[6]));
-        }
-        
-        
+            szablon_wyb.setText(tmpfile.filename);
+        }        
     }//GEN-LAST:event_szablon_wybActionPerformed
 
     private void cofnijActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cofnijActionPerformed
@@ -1240,19 +1248,6 @@ public class Frame extends javax.swing.JFrame{
             }
     }
         
-    private void start_temp(){
-        File myObj = new File("temp.txt");
-        try{
-            if (myObj.createNewFile()) {
-                System.out.println("File created: " + myObj.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-    }
     
     private void minus(JTextField tx){
         int tmp = Integer.parseInt(tx.getText())-1;
@@ -1267,6 +1262,10 @@ public class Frame extends javax.swing.JFrame{
             tx.setText(Integer.toString(tmp));
         }
     }
+        
+        private void set_names(){
+            
+        }
         
 }
 
