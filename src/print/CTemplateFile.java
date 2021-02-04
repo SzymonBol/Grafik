@@ -33,6 +33,18 @@ public class CTemplateFile {
         options[6]=x6;
         names=new String[prac];
     }
+           
+    protected CTemplateFile(int prac, int x1, int x2, int x3, int x4, int x5, int x6, String[] tab){
+        options[0]=prac;
+        options[1]=x1;
+        options[2]=x2;
+        options[3]=x3;
+        options[4]=x4;
+        options[5]=x5;
+        options[6]=x6;
+        names=new String[prac];
+        names=tab;
+    }
     
     protected void filechooser(Component x){
         openFile = new JFileChooser();

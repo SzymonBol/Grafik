@@ -57,14 +57,12 @@ public class Frame extends javax.swing.JFrame{
     Color myBlue=new Color(128,206,212);
     int[] sobniedz={-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
     int zm_sn=0;
-    private final JFileChooser openFile;
     boolean first=true;
-    String mies_tmp;
     Calendar x_tmp;
-    int[] template_values= new int[7];
     String[] employee_name;
     CTemplateFile tmpfile=new CTemplateFile();
     CTemplateFile dialog_file;
+    JTextPane[] names;
     
     
     public Frame() {
@@ -90,11 +88,8 @@ public class Frame extends javax.swing.JFrame{
         
         Lmies_num.setText(Integer.toString(Calendar.getInstance().get(Calendar.MONTH)+1));
         Lrok_num.setText(Integer.toString(Calendar.getInstance().get(Calendar.YEAR)));
-        
-        openFile = new JFileChooser();
-        openFile.setFileFilter(new FileNameExtensionFilter("TEXT FILES", "txt", "text"));
-        
-        template_values[0]=0;
+
+        Tprac.setText("0");
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -833,7 +828,8 @@ public class Frame extends javax.swing.JFrame{
             }
         
         //imiona
-            JTextPane[] names=new JTextPane[prac];
+            names=new JTextPane[prac];
+            employee_name= new String[prac];
             for(int i=0;i<prac;i++){
                 names[i]=new JTextPane();
                 StyledDocument doc = names[i].getStyledDocument();
@@ -846,6 +842,7 @@ public class Frame extends javax.swing.JFrame{
                 names[i].setOpaque(false);
                 PanelToPrint.add(names[i]);
             }
+            
             
             //szblony
             if(tmpfile.ok){
@@ -961,10 +958,18 @@ public class Frame extends javax.swing.JFrame{
 
     private void plus_min_wolneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus_min_wolneActionPerformed
        plus(min_wolne);
+       if(Integer.parseInt(pref_wolne.getText())<Integer.parseInt(min_wolne.getText()))
+           pref_wolne.setText(min_wolne.getText());
+       if(Integer.parseInt(max_wolne.getText())<Integer.parseInt(min_wolne.getText()))
+           max_wolne.setText(min_wolne.getText());
     }//GEN-LAST:event_plus_min_wolneActionPerformed
 
     private void plus_min_osobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus_min_osobActionPerformed
        plus(min_osob);
+       if(Integer.parseInt(pref_osob.getText())<Integer.parseInt(min_osob.getText()))
+           pref_osob.setText(min_osob.getText());
+       if(Integer.parseInt(max_osob.getText())<Integer.parseInt(min_osob.getText()))
+           max_osob.setText(min_osob.getText());
     }//GEN-LAST:event_plus_min_osobActionPerformed
 
     private void minus_min_osobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus_min_osobActionPerformed
@@ -973,10 +978,14 @@ public class Frame extends javax.swing.JFrame{
 
     private void plus_pref_wolneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus_pref_wolneActionPerformed
        plus(pref_wolne);
+       if(Integer.parseInt(max_wolne.getText())<Integer.parseInt(pref_wolne.getText()))
+           max_wolne.setText(pref_wolne.getText());
     }//GEN-LAST:event_plus_pref_wolneActionPerformed
 
     private void minus_pref_wolneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus_pref_wolneActionPerformed
        minus(pref_wolne);
+       if(Integer.parseInt(min_wolne.getText())>Integer.parseInt(pref_wolne.getText()))
+           min_wolne.setText(pref_wolne.getText());
     }//GEN-LAST:event_minus_pref_wolneActionPerformed
 
     private void plus_max_wolneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus_max_wolneActionPerformed
@@ -985,14 +994,22 @@ public class Frame extends javax.swing.JFrame{
 
     private void minus_max_wolneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus_max_wolneActionPerformed
        minus(max_wolne);
+       if(Integer.parseInt(max_wolne.getText())<Integer.parseInt(min_wolne.getText()))
+           min_wolne.setText(max_wolne.getText());
+       if(Integer.parseInt(max_wolne.getText())<Integer.parseInt(pref_wolne.getText()))
+           pref_wolne.setText(max_wolne.getText());
     }//GEN-LAST:event_minus_max_wolneActionPerformed
 
     private void plus_pref_osobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus_pref_osobActionPerformed
        plus(pref_osob);
+       if(Integer.parseInt(max_osob.getText())<Integer.parseInt(pref_osob.getText()))
+           max_osob.setText(pref_osob.getText());
     }//GEN-LAST:event_plus_pref_osobActionPerformed
 
     private void minus_pref_osobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus_pref_osobActionPerformed
         minus(pref_osob);
+        if(Integer.parseInt(min_osob.getText())>Integer.parseInt(pref_osob.getText()))
+           min_osob.setText(pref_osob.getText());
     }//GEN-LAST:event_minus_pref_osobActionPerformed
 
     private void plus_max_osobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plus_max_osobActionPerformed
@@ -1001,6 +1018,10 @@ public class Frame extends javax.swing.JFrame{
 
     private void minus_max_osobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minus_max_osobActionPerformed
         minus(max_osob);
+        if(Integer.parseInt(pref_osob.getText())>Integer.parseInt(max_osob.getText()))
+           pref_osob.setText(max_osob.getText());
+        if(Integer.parseInt(max_osob.getText())<Integer.parseInt(min_osob.getText()))
+           min_osob.setText(max_osob.getText());
     }//GEN-LAST:event_minus_max_osobActionPerformed
 
     private void szablon_wybActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_szablon_wybActionPerformed
@@ -1018,7 +1039,6 @@ public class Frame extends javax.swing.JFrame{
     }//GEN-LAST:event_szablon_wybActionPerformed
 
     private void cofnijActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cofnijActionPerformed
-        mies_tmp=jLabel9.getText();
         zamien(StartingPanel);
     }//GEN-LAST:event_cofnijActionPerformed
 
@@ -1027,7 +1047,14 @@ public class Frame extends javax.swing.JFrame{
     }//GEN-LAST:event_generujActionPerformed
 
     private void add_templateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_templateActionPerformed
-        
+        for(int i=0;i<prac;i++){
+            employee_name[i]=names[i].getText();
+        }
+        dialog_file= new CTemplateFile(Integer.parseInt(Tprac.getText()),Integer.parseInt(min_wolne.getText()),
+                   Integer.parseInt(pref_wolne.getText()),Integer.parseInt(max_wolne.getText()), Integer.parseInt(min_osob.getText()),
+                   Integer.parseInt(pref_osob.getText()),Integer.parseInt(max_osob.getText()),employee_name);
+        CNamesDialog dialog=new CNamesDialog(this,dialog_file);
+        dialog.setVisible(true);
     }//GEN-LAST:event_add_templateActionPerformed
 
     private void printPanel(JPanel jpanel){
