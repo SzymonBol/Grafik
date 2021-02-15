@@ -16,10 +16,9 @@ import javax.swing.SwingConstants;
  * @author REDBUL
  */
 public class Cpole {
-    int zmlogic=0;
+    int zmlogic=-1;
     int zm=7;
     JLabel j=new JLabel();
-//    String[] zm={"R","P","W"," "};
     int nextval=0;     
     Cpole(){
         j.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -32,7 +31,7 @@ public class Cpole {
             if(evt.getButton() == MouseEvent.BUTTON3)
             {
                 j.setText(" ");
-                zmlogic=0;
+                zmlogic=-1;
             }
             else    
                 zmiana();
@@ -50,10 +49,7 @@ public class Cpole {
             case 6: j.setText("Og");break;
             case 7: break;
         }
-        zmlogic=1;
-//        j.setText(zm[nextval]);
-//        nextval++;
-//        if(nextval>3){ nextval=0; zmlogic=0;}
+        zmlogic=zm;
     }
     
 }

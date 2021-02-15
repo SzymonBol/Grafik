@@ -1043,7 +1043,7 @@ public class Frame extends javax.swing.JFrame{
     }//GEN-LAST:event_cofnijActionPerformed
 
     private void generujActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generujActionPerformed
-        // TODO add your handling code here:
+        generate_twelve_blank();
     }//GEN-LAST:event_generujActionPerformed
 
     private void add_templateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_templateActionPerformed
@@ -1290,9 +1290,19 @@ public class Frame extends javax.swing.JFrame{
         }
     }
         
-        private void set_names(){
-            
+    void generate_twelve_blank(){
+        int[][] gen_tab= new int[prac][days];
+        for(int i=0;i<prac;i++){
+            for(int j=0;j<days;j++){
+                if(tab[i][j].zmlogic!=-1)
+                    gen_tab[i][j]=tab[i][j].zmlogic;
+                else
+                    gen_tab[i][j]=-1;
+                System.out.print(gen_tab[i][j]);
+            }
+            System.out.println();
         }
+    }
         
 }
 
