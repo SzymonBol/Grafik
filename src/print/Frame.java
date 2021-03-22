@@ -23,6 +23,7 @@ import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,6 +41,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+import print.res.UniqueRandomNumber;
 
 /**
  *
@@ -67,7 +69,6 @@ public class Frame extends javax.swing.JFrame{
     
     public Frame() {
         initComponents();
-        
         Toolkit tk=getToolkit();
         Dimension size=tk.getScreenSize();
         setLocation(size.width/2-getWidth()/2,size.height/2-getHeight()/2);
@@ -1291,13 +1292,35 @@ public class Frame extends javax.swing.JFrame{
     }
         
     void generate_twelve_blank(){
-        int[][] gen_tab= new int[prac][days];
+        int[][] gen_tab= new int[prac][7];
         for(int i=0;i<prac;i++){
-            for(int j=0;j<days;j++){
+            for(int j=0;j<7;j++){
                 if(tab[i][j].zmlogic!=-1)
                     gen_tab[i][j]=tab[i][j].zmlogic;
                 else
                     gen_tab[i][j]=-1;
+                //System.out.print(gen_tab[i][j]);
+            }
+        }
+        
+        //ustalanie pierwszej niedzieli
+        int wol=prac-Integer.parseInt(pref_osob.getText());
+        UniqueRandomNumber urn_niedz =new UniqueRandomNumber(prac);
+        for(int x=0;x<wol;x++)
+            gen_tab[urn_niedz.Value()][sobniedz[1]]=3;
+        for(int i=0;i<prac;i++){
+            if(gen_tab[i][sobniedz[1]]==-1)
+                gen_tab[i][sobniedz[1]]=1;
+        }
+        
+        UniqueRandomNumber abc =new UniqueRandomNumber(6);
+        for(int i=0;i<prac-wol;i++){
+             gen_tab[urn_niedz.Value()][abc.Value()]=3;
+        }
+        
+        
+        for(int i=0;i<prac;i++){
+            for(int j=0;j<7;j++){
                 System.out.print(gen_tab[i][j]);
             }
             System.out.println();
