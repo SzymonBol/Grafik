@@ -1304,21 +1304,67 @@ public class Frame extends javax.swing.JFrame{
         }
         
         //ustalanie pierwszej niedzieli
-        int wol=prac-Integer.parseInt(pref_osob.getText());
-        UniqueRandomNumber urn_niedz =new UniqueRandomNumber(prac);
-        for(int x=0;x<wol;x++)
-            gen_tab[urn_niedz.Value()][sobniedz[1]]=3;
-        for(int i=0;i<prac;i++){
-            if(gen_tab[i][sobniedz[1]]==-1)
-                gen_tab[i][sobniedz[1]]=1;
+        int prac_na_zmianie=Integer.parseInt(pref_osob.getText());
+        int wol_na_dzien=prac-prac_na_zmianie;
+        if(wol_na_dzien==0){
+            for(int i=0;i<prac;i++){
+                for(int j=0;j<7;j++){
+                    if(gen_tab[i][j]==-1)
+                        gen_tab[i][j]=1;
+                }
+            }
+        }
+        else{
+            // 7 zamienic na days
+            int wol_prac_w_mies=(7*(prac-prac_na_zmianie))/prac;
+            int prac_z_nadwyzka_wol=(7*(prac-prac_na_zmianie))%prac;
+            UniqueRandomNumber urn =new UniqueRandomNumber(prac); 
+            // 6 to dni pon-sob (testowo)
+            UniqueRandomNumber urn2 =new UniqueRandomNumber(6);
+            CWorker[] workers=new CWorker[prac];
+            for(int i=0;i<prac;i++){
+                workers[i]=new CWorker(wol_prac_w_mies);
+            }
+            
+            //losowanie osob z nadwyzka wolnych
+            for(int i=0;i<prac_z_nadwyzka_wol;i++){
+                workers[urn.Value()].wolne=wol_prac_w_mies+1;                
+            }
+            
+            //tu powinen byc algorytm losujacy
+            urn.ZeroNext();
+            
+            for(CWorker x:workers){
+                System.out.print(x.wolne+" ");
+            }
+            
+            /*
+            //pierwsza niedziala wolne
+            for(int x=0;x<wol_na_dzien;x++)
+                gen_tab[urn.Value()][sobniedz[1]]=3;
+            
+            //cala reszta w niedziele pracujaca
+            for(int i=0;i<prac;i++){
+                if(gen_tab[i][sobniedz[1]]==-1)
+                    gen_tab[i][sobniedz[1]]=1;
+            }
+            
+            //reszta pracownikow wolne losowo w inne dni
+            for(int i=0;i<prac-wol_na_dzien;i++){
+                gen_tab[urn.Value()][urn2.Value()]=3;
+            }
+            
+            // 1 gdzie nie ma 3 
+            for(int i=0;i<prac;i++){
+                for(int j=0;j<7;j++){
+                    if(gen_tab[i][j]==-1)
+                        gen_tab[i][j]=1;
+                }
+            }
+            */
         }
         
-        UniqueRandomNumber abc =new UniqueRandomNumber(6);
-        for(int i=0;i<prac-wol;i++){
-             gen_tab[urn_niedz.Value()][abc.Value()]=3;
-        }
-        
-        
+        //wyswietlanie
         for(int i=0;i<prac;i++){
             for(int j=0;j<7;j++){
                 System.out.print(gen_tab[i][j]);
